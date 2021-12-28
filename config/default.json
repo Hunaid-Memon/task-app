@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://Hunaid:123321@taskapp.hxc5n.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "jwtSecret": "secret"
+}
