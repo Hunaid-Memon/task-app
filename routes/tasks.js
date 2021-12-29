@@ -56,16 +56,61 @@ router.post('/', [auth, [
 // @route   PUT api/tasks:id
 // @desc    Update a task
 // @access  Private
-router.put('/:id', (req,res) => {
-    res.send('Update a task')
+router.put('/:id', auth , async (req,res) => {
+    
+    const { name, email, phone, relationship } = req.body;
+
+    const taskFields = { };
+
+    if(name) taskFields.name = name;
+    if(email) taskFields.email = email;
+    if(phone) taskFields.phone = phone;
+    if(relationship) taskFields.relationship = relationship;
+
+    try {
+        let task = await Task.findById(req.params.id);
+
+        if(!task) return res.status(404).json({ msg: 'This task does not exist.' });
+
+        if(task.user.toString() !== req.user.id ) {
+            return res.status(401).json({ msg: 'You do not have the correct authorization to update this contact' });
+        }
+
+        task = await Task.findByIdAndUpdate(req.params.id,
+            { $set: taskFields },
+            { new: true }
+            );
+            
+            res.json(task)
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 
 // @route   DELETE api/tasks:id
 // @desc    Delete the task
 // @access  Private
-router.delete('/:id', (req,res) => {
-    res.send('Delete the task')
+router.delete('/:id', auth, async (req,res) => {
+    try {
+        let task = await Task.findById(req.params.id);
+
+        if(!task) return res.status(404).json({ msg: 'This task does not exist.' });
+
+        if(task.user.toString() !== req.user.id ) {
+            return res.status(401).json({ msg: 'You do not have the correct authorization to update this contact' });
+        }
+ 
+        await Task.findByIdAndRemove(req.params.id);
+
+        res.json({ msg: 'This contact has been removed' })
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 
