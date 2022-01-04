@@ -25,21 +25,21 @@ router.get('/', auth ,async (req, res) => {
 // @desc    Add a new task
 // @access  Private
 router.post('/', [auth, [
-    check('name', 'Name is required').not().isEmpty()
+    check('title', 'title is required').not().isEmpty()
 ] ] , async (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, phone, relationship } = req.body;
+    const { title, subject, type, setDate } = req.body;
 
     try {
         const newTask = new Task({
-            name,
-            email,
-            phone,
-            relationship,
+            title,
+            subject,
+            type,
+            setDate,
             user: req.user.id
         })
 
@@ -58,14 +58,14 @@ router.post('/', [auth, [
 // @access  Private
 router.put('/:id', auth , async (req,res) => {
     
-    const { name, email, phone, relationship } = req.body;
+    const { title, subject, type, setDate } = req.body;
 
     const taskFields = { };
 
-    if(name) taskFields.name = name;
-    if(email) taskFields.email = email;
-    if(phone) taskFields.phone = phone;
-    if(relationship) taskFields.relationship = relationship;
+    if(title) taskFields.title = title;
+    if(subject) taskFields.subject = subject;
+    if(type) taskFields.type = type;
+    if(setDate) taskFields.setDate = setDate;
 
     try {
         let task = await Task.findById(req.params.id);

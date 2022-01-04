@@ -5,19 +5,23 @@ const TaskSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
-    name: {
+    title: {
         type: String,
-        require: true
+        required: true
     },
-    email: {
+    subject: {
         type: String,
-        require: true,
+        required: true,
     },
-    password: {
+    type: {
         type: String,
-        require: true
+        default: 'Pending'
     },
-    relationship: {
+    setDate: {
+        type: String,
+        required: true
+    },
+    date: {
         type: Date,
         default: Date.now
     }
