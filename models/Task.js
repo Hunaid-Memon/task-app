@@ -15,7 +15,7 @@ const TaskSchema = mongoose.Schema({
     },
     type: {
         type: String,
-        default: 'Pending'
+        default: 'pending'
     },
     setDate: {
         type: String,
