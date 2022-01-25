@@ -54,7 +54,6 @@ const AuthState = props => {
             dispatch({ type: REGISTER_FAIL, payload: err.response.data.msg })
         }
     }
-    
     // Login User
     const login = async formData => {
         const config = {
@@ -72,6 +71,7 @@ const AuthState = props => {
     }
 
     // Logout User
+    const logout = () => dispatch({ type: LOGOUT })
  
     // Clear Errors
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
@@ -87,7 +87,8 @@ const AuthState = props => {
                 register,
                 clearErrors,
                 loadUser,
-                login
+                login,
+                logout
             }}
         >
             {props.children}

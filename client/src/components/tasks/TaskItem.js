@@ -7,10 +7,10 @@ const TaskItem = ({ task }) => {
 
     const { deleteTask, setCurrent, clearCurrent } = taskContext;
 
-    const { id, title, subject, type, setDate } = task;
+    const { _id, title, subject, type, setDate } = task;
 
     const onDelete = () => {
-        deleteTask(id);
+        deleteTask(_id);
         clearCurrent();
     }
 
