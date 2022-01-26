@@ -1,10 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import TaskContext from '../context/task/taskContext';
+import AlertContext from '../context/alert/alertContext';
 
 const TaskForm = () => {
     const taskContext = useContext(TaskContext);
+    const alertContext = useContext(AlertContext);
 
     const { addTask, current, clearCurrent, updateTask } = taskContext;
+    const { setAlert } = alertContext;
 
     useEffect(() => {
         if(current !== null) {
@@ -21,13 +24,17 @@ const TaskForm = () => {
 
     const onSubmit = e => {
         e.preventDefault();
+        if(title !== '' && subject !== '' && setDate !=='') {
 
-        if(current === null) {
-            addTask(task);
+            if(current === null) {
+                addTask(task);
+            } else {
+                updateTask(task)
+            }
+            clearAll()
         } else {
-            updateTask(task)
+            setAlert('Please fill all fields', 'danger')
         }
-        clearAll()
     }
 
     const [task, setTask] = useState({

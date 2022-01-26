@@ -10,6 +10,7 @@ const Tasks = () => {
 
     useEffect(() => {
         getTasks();
+        // eslint-disable-next-line
     }, [])
 
     if(tasks !== null && tasks.length === 0 && !loading ) {
